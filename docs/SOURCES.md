@@ -8,8 +8,8 @@ end-to-end model quality, perplexity, task score, or serving throughput.
 
 - Package under test: `catalyst-brain==1.3.3` from PyPI.
 - Public APIs used by the suite: `CatalystTokenKernel`, `ToolSpec`, `PyHKVC`,
-  `RainPayload`, Rain serialization helpers, `PyHoloSwarm`, and HDC primitive
-  operations from the public wheel.
+  `PyQuantumAttentionHead`, `RainPayload`, Rain serialization helpers,
+  `PyHoloSwarm`, and HDC primitive operations from the public wheel.
 - HKVC comparison state: fixed 4096-dimensional public SDK state, modeled as
   4096 float32 values.
 - Rain state size: measured by `CatalystTokenKernel.export_rain_snapshot(...)`
@@ -19,6 +19,9 @@ end-to-end model quality, perplexity, task score, or serving throughput.
 - Tool-selection accuracy uses a deterministic public MCP-style catalog and
   query set. It checks whether compact discovery preserves routing quality for
   that harness; it does not claim general semantic retrieval quality.
+- Quantum attention head benchmarks use deterministic HDC keys/values, noisy
+  query probes, and a pure-Python cosine softmax reference. They measure
+  public-wheel routing behavior and latency, not physical quantum execution.
 
 ## Transformer KV-Cache Model
 

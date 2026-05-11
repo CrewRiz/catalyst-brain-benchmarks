@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import importlib.metadata as metadata
 import json
+import math
 import platform
 import statistics
 import time
@@ -98,6 +99,50 @@ def _measure_us(func: Callable[[], Any], *, repeats: int, warmup: int = 5) -> di
         "min_us": round(ordered[0], 4),
         "max_us": round(ordered[-1], 4),
     }
+
+
+def _raw_dot(a: list[float], b: list[float]) -> float:
+    return sum(x * y for x, y in zip(a, b)) / len(a)
+
+
+def _flip_deterministic(vector: list[float], *, noise_pct: float, seed: int) -> list[float]:
+    if noise_pct <= 0.0:
+        return list(vector)
+    period = 10_000
+    threshold = int(noise_pct * period)
+    return [
+        -value
+        if ((index * 1_103 + seed * 9_176 + 41) % period) < threshold
+        else value
+        for index, value in enumerate(vector)
+    ]
+
+
+def _classical_softmax_attention(
+    query: list[float],
+    keys: list[list[float]],
+    values: list[list[float]],
+    *,
+    beta: float = 8.0,
+) -> list[float]:
+    scores = [_raw_dot(query, key) for key in keys]
+    offset = max(scores)
+    weights = [math.exp(beta * (score - offset)) for score in scores]
+    total = sum(weights)
+    if total <= 0.0:
+        return [0.0] * len(query)
+    out = [0.0] * len(query)
+    for weight, value in zip(weights, values):
+        scaled = weight / total
+        for index, item in enumerate(value):
+            out[index] += scaled * item
+    return out
+
+
+def _predict_value_index(output: list[float], values: list[list[float]]) -> tuple[int, float]:
+    scores = [_raw_dot(output, value) for value in values]
+    best = max(range(len(scores)), key=lambda index: scores[index])
+    return best, scores[best]
 
 
 def _make_tool_spec(index: int) -> ToolSpec:
@@ -373,6 +418,107 @@ def benchmark_hdc_primitives(*, mode: str) -> list[dict[str, Any]]:
                     "elements_per_second_median": round(dim / (measured["median_us"] / 1_000_000.0), 2),
                 }
             )
+    return rows
+
+
+def benchmark_quantum_attention_heads(*, mode: str) -> list[dict[str, Any]]:
+    """Benchmark quantum-inspired attention routing through the public wheel."""
+    configs = (
+        [(256, 4, 0.00), (512, 16, 0.05), (1024, 64, 0.10)]
+        if mode == "quick"
+        else [
+            (256, 4, 0.00),
+            (512, 16, 0.05),
+            (1024, 64, 0.10),
+            (2048, 128, 0.15),
+        ]
+    )
+    trials = 12 if mode == "quick" else 32
+    repeats = 60 if mode == "quick" else 140
+    rows: list[dict[str, Any]] = []
+
+    for dim, key_count, noise_pct in configs:
+        keys = [hdc.hv_hash_string(f"qattn-key-{dim}-{key_count}-{i}", dim) for i in range(key_count)]
+        values = [
+            hdc.hv_hash_string(f"qattn-value-{dim}-{key_count}-{i}", dim)
+            for i in range(key_count)
+        ]
+        nqubits = max(4, min(40, (key_count - 1).bit_length()))
+        latency_target = key_count // 2
+        latency_query = _flip_deterministic(
+            keys[latency_target],
+            noise_pct=noise_pct,
+            seed=latency_target,
+        )
+
+        quantum_head = hdc.PyQuantumAttentionHead(dim, nqubits)
+
+        def quantum_compute() -> list[float]:
+            return quantum_head.compute(latency_query, keys, values)
+
+        def classical_compute() -> list[float]:
+            return _classical_softmax_attention(latency_query, keys, values)
+
+        quantum_latency = _measure_us(quantum_compute, repeats=repeats)
+        classical_latency = _measure_us(classical_compute, repeats=repeats)
+
+        quantum_correct = 0
+        classical_correct = 0
+        quantum_confidences: list[float] = []
+        classical_confidences: list[float] = []
+        for trial in range(trials):
+            target = (trial * 7 + key_count // 3) % key_count
+            query = _flip_deterministic(
+                keys[target],
+                noise_pct=noise_pct,
+                seed=trial + dim,
+            )
+            q_out = quantum_head.compute(query, keys, values)
+            c_out = _classical_softmax_attention(query, keys, values)
+            q_pred, q_conf = _predict_value_index(q_out, values)
+            c_pred, c_conf = _predict_value_index(c_out, values)
+            quantum_correct += int(q_pred == target)
+            classical_correct += int(c_pred == target)
+            quantum_confidences.append(q_conf)
+            classical_confidences.append(c_conf)
+
+        rows.append(
+            {
+                "dimension": dim,
+                "key_count": key_count,
+                "noise_pct": round(noise_pct * 100.0, 2),
+                "method": "Catalyst PyQuantumAttentionHead",
+                "nqubits": nqubits,
+                "trials": trials,
+                "top1_accuracy_pct": round(100.0 * quantum_correct / trials, 4),
+                "mean_target_confidence": round(statistics.fmean(quantum_confidences), 6),
+                "median_us": quantum_latency["median_us"],
+                "p95_us": quantum_latency["p95_us"],
+                "latency_vs_classical_x": round(
+                    classical_latency["median_us"] / quantum_latency["median_us"],
+                    4,
+                )
+                if quantum_latency["median_us"] > 0
+                else 0.0,
+                "baseline": "classical cosine softmax reference",
+            }
+        )
+        rows.append(
+            {
+                "dimension": dim,
+                "key_count": key_count,
+                "noise_pct": round(noise_pct * 100.0, 2),
+                "method": "Classical cosine softmax",
+                "nqubits": 0,
+                "trials": trials,
+                "top1_accuracy_pct": round(100.0 * classical_correct / trials, 4),
+                "mean_target_confidence": round(statistics.fmean(classical_confidences), 6),
+                "median_us": classical_latency["median_us"],
+                "p95_us": classical_latency["p95_us"],
+                "latency_vs_classical_x": 1.0,
+                "baseline": "pure Python reference implementation",
+            }
+        )
     return rows
 
 
@@ -698,6 +844,12 @@ def summarize_benchmark_claims(results: dict[str, Any]) -> dict[str, Any]:
         1 for row in largest_recency_rows if row["value_ok"]
     ) / len(largest_recency_rows)
     largest_rain = max(results["rain_state_transfer"], key=lambda row: row["dimension"])
+    quantum_rows = [
+        row
+        for row in results["quantum_attention_heads"]
+        if row["method"] == "Catalyst PyQuantumAttentionHead"
+    ]
+    largest_quantum = max(quantum_rows, key=lambda row: row["key_count"])
     return {
         "best_compact_discovery_saved_pct": round(token_best, 4),
         "best_deferred_output_saved_pct": round(deferred_best, 4),
@@ -717,6 +869,12 @@ def summarize_benchmark_claims(results: dict[str, Any]) -> dict[str, Any]:
         "rain_largest_dimension": largest_rain["dimension"],
         "rain_largest_header_bytes": largest_rain["rain_header_bytes"],
         "rain_largest_header_under_8kb": largest_rain["header_under_8kb"],
+        "quantum_attention_largest_key_count": largest_quantum["key_count"],
+        "quantum_attention_largest_accuracy_pct": largest_quantum["top1_accuracy_pct"],
+        "quantum_attention_largest_median_us": largest_quantum["median_us"],
+        "quantum_attention_largest_speedup_vs_reference_x": largest_quantum[
+            "latency_vs_classical_x"
+        ],
         "claim_boundary": (
             "Benchmarks use public catalyst-brain APIs and explicit memory models; "
             "they are not SDK source disclosures or provider billing statements."
@@ -730,7 +888,7 @@ def run_suite(*, mode: str = "quick") -> dict[str, Any]:
     started = datetime.now(timezone.utc)
     results = {
         "metadata": {
-            "suite_version": "0.3.0",
+            "suite_version": "0.4.0",
             "mode": mode,
             "started_at": started.isoformat(),
             "python": platform.python_version(),
@@ -746,6 +904,7 @@ def run_suite(*, mode: str = "quick") -> dict[str, Any]:
         "tool_selection_accuracy": benchmark_tool_selection_accuracy(mode=mode),
         "deferred_outputs": benchmark_deferred_outputs(mode=mode),
         "hdc_primitives": benchmark_hdc_primitives(mode=mode),
+        "quantum_attention_heads": benchmark_quantum_attention_heads(mode=mode),
         "bind_unbind_correctness": benchmark_bind_unbind_correctness(mode=mode),
         "hkvc_scaling": benchmark_hkvc_scaling(mode=mode),
         "hkvc_path_breakdown": benchmark_hkvc_path_breakdown(mode=mode),
@@ -840,6 +999,14 @@ def render_markdown_report(results: dict[str, Any]) -> str:
             "| Rain largest header under 8 KB | "
             f"`{summary['rain_largest_header_under_8kb']}` |"
         ),
+        (
+            "| Quantum attention largest-key top-1 accuracy | "
+            f"{summary['quantum_attention_largest_accuracy_pct']:.2f}% |"
+        ),
+        (
+            "| Quantum attention largest-key speedup vs reference | "
+            f"{summary['quantum_attention_largest_speedup_vs_reference_x']:.2f}x |"
+        ),
         "",
         "## Install Smoke",
         "",
@@ -895,6 +1062,25 @@ def render_markdown_report(results: dict[str, Any]) -> str:
         lines.append(
             "| {stdout_bytes} | {full_result_bytes} | {compact_status_bytes} | "
             "{saved_pct:.2f}% | {saved_tokens} |".format(**row)
+        )
+    lines.extend(
+        [
+            "",
+            "## Quantum-Inspired Attention Heads",
+            "",
+            "This benchmark measures the public `PyQuantumAttentionHead` routing "
+            "behavior against a pure-Python cosine softmax reference. It does "
+            "not claim physical quantum execution.",
+            "",
+            "| Dim | Keys | Noise | Method | Top-1 accuracy | Median us | p95 us | Speedup vs ref | Mean confidence |",
+            "|---:|---:|---:|---|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for row in results["quantum_attention_heads"]:
+        lines.append(
+            "| {dimension} | {key_count} | {noise_pct:.2f}% | {method} | "
+            "{top1_accuracy_pct:.2f}% | {median_us:.4f} | {p95_us:.4f} | "
+            "{latency_vs_classical_x:.2f}x | {mean_target_confidence:.6f} |".format(**row)
         )
     lines.extend(
         [

@@ -13,13 +13,13 @@
 <line x1="84" y1="462.00" x2="924" y2="462.00" stroke="#e5e7eb"/>
 <text x="74" y="466.00" class="tick" text-anchor="end">11.6</text>
 <line x1="84" y1="358.00" x2="924" y2="358.00" stroke="#e5e7eb"/>
-<text x="74" y="362.00" class="tick" text-anchor="end">12.5</text>
+<text x="74" y="362.00" class="tick" text-anchor="end">12.6</text>
 <line x1="84" y1="254.00" x2="924" y2="254.00" stroke="#e5e7eb"/>
-<text x="74" y="258.00" class="tick" text-anchor="end">13.4</text>
+<text x="74" y="258.00" class="tick" text-anchor="end">13.6</text>
 <line x1="84" y1="150.00" x2="924" y2="150.00" stroke="#e5e7eb"/>
-<text x="74" y="154.00" class="tick" text-anchor="end">14.3</text>
+<text x="74" y="154.00" class="tick" text-anchor="end">14.5</text>
 <line x1="84" y1="46.00" x2="924" y2="46.00" stroke="#e5e7eb"/>
-<text x="74" y="50.00" class="tick" text-anchor="end">15.2</text>
+<text x="74" y="50.00" class="tick" text-anchor="end">15.5</text>
 <text x="84.00" y="492" class="tick" text-anchor="middle">100</text>
 <text x="294.00" y="492" class="tick" text-anchor="middle">1,325</text>
 <text x="504.00" y="492" class="tick" text-anchor="middle">2,550</text>
@@ -27,15 +27,15 @@
 <text x="924.00" y="492" class="tick" text-anchor="middle">5,000</text>
 <text x="504.0" y="526" class="axis" text-anchor="middle">Stored entries</text>
 <text x="20" y="254.0" class="axis" text-anchor="middle" transform="rotate(-90 20 254.0)">Median query latency (us)</text>
-<path d="M84.00,462.00 L238.29,395.10 L924.00,404.62" fill="none" stroke="#2563eb" stroke-width="3"/>
+<path d="M84.00,462.00 L238.29,408.32 L924.00,408.32" fill="none" stroke="#2563eb" stroke-width="3"/>
 <circle cx="84.00" cy="462.00" r="4" fill="#2563eb"/>
-<circle cx="238.29" cy="395.10" r="4" fill="#2563eb"/>
-<circle cx="924.00" cy="404.62" r="4" fill="#2563eb"/>
+<circle cx="238.29" cy="408.32" r="4" fill="#2563eb"/>
+<circle cx="924.00" cy="408.32" r="4" fill="#2563eb"/>
 <rect x="720" y="46" width="14" height="14" fill="#2563eb"/>
 <text x="742" y="58" class="legend">median</text>
-<path d="M84.00,323.37 L238.29,375.93 L924.00,46.00" fill="none" stroke="#16a34a" stroke-width="3"/>
-<circle cx="84.00" cy="323.37" r="4" fill="#16a34a"/>
-<circle cx="238.29" cy="375.93" r="4" fill="#16a34a"/>
+<path d="M84.00,453.09 L238.29,394.90 L924.00,46.00" fill="none" stroke="#16a34a" stroke-width="3"/>
+<circle cx="84.00" cy="453.09" r="4" fill="#16a34a"/>
+<circle cx="238.29" cy="394.90" r="4" fill="#16a34a"/>
 <circle cx="924.00" cy="46.00" r="4" fill="#16a34a"/>
 <rect x="720" y="70" width="14" height="14" fill="#16a34a"/>
 <text x="742" y="82" class="legend">p95</text>

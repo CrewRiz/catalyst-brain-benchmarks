@@ -11,13 +11,13 @@
 <line x1="84" y1="462" x2="924" y2="462" stroke="#111827"/>
 <line x1="84" y1="46" x2="84" y2="462" stroke="#111827"/>
 <line x1="84" y1="462.00" x2="924" y2="462.00" stroke="#e5e7eb"/>
-<text x="74" y="466.00" class="tick" text-anchor="end">545.0</text>
+<text x="74" y="466.00" class="tick" text-anchor="end">547.0</text>
 <line x1="84" y1="358.00" x2="924" y2="358.00" stroke="#e5e7eb"/>
-<text x="74" y="362.00" class="tick" text-anchor="end">1,644</text>
+<text x="74" y="362.00" class="tick" text-anchor="end">1,649</text>
 <line x1="84" y1="254.00" x2="924" y2="254.00" stroke="#e5e7eb"/>
-<text x="74" y="258.00" class="tick" text-anchor="end">4,959</text>
+<text x="74" y="258.00" class="tick" text-anchor="end">4,968</text>
 <line x1="84" y1="150.00" x2="924" y2="150.00" stroke="#e5e7eb"/>
-<text x="74" y="154.00" class="tick" text-anchor="end">14,960</text>
+<text x="74" y="154.00" class="tick" text-anchor="end">14,974</text>
 <line x1="84" y1="46.00" x2="924" y2="46.00" stroke="#e5e7eb"/>
 <text x="74" y="50.00" class="tick" text-anchor="end">45,127</text>
 <text x="84.00" y="492" class="tick" text-anchor="middle">1,024</text>
@@ -27,22 +27,22 @@
 <text x="924.00" y="492" class="tick" text-anchor="middle">10,000</text>
 <text x="504.0" y="526" class="axis" text-anchor="middle">Hypervector dimension</text>
 <text x="20" y="254.0" class="axis" text-anchor="middle" transform="rotate(-90 20 254.0)">Bytes (log scale)</text>
-<path d="M84.00,258.24 L594.99,129.82 L924.00,46.00" fill="none" stroke="#2563eb" stroke-width="3"/>
-<circle cx="84.00" cy="258.24" r="4" fill="#2563eb"/>
-<circle cx="594.99" cy="129.82" r="4" fill="#2563eb"/>
+<path d="M84.00,258.42 L594.99,129.89 L924.00,46.00" fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="84.00" cy="258.42" r="4" fill="#2563eb"/>
+<circle cx="594.99" cy="129.89" r="4" fill="#2563eb"/>
 <circle cx="924.00" cy="46.00" r="4" fill="#2563eb"/>
 <rect x="720" y="46" width="14" height="14" fill="#2563eb"/>
 <text x="742" y="58" class="legend">JSON state</text>
-<path d="M84.00,462.00 L594.99,380.11 L924.00,309.06" fill="none" stroke="#16a34a" stroke-width="3"/>
+<path d="M84.00,462.00 L594.99,380.54 L924.00,309.32" fill="none" stroke="#16a34a" stroke-width="3"/>
 <circle cx="84.00" cy="462.00" r="4" fill="#16a34a"/>
-<circle cx="594.99" cy="380.11" r="4" fill="#16a34a"/>
-<circle cx="924.00" cy="309.06" r="4" fill="#16a34a"/>
+<circle cx="594.99" cy="380.54" r="4" fill="#16a34a"/>
+<circle cx="924.00" cy="309.32" r="4" fill="#16a34a"/>
 <rect x="720" y="70" width="14" height="14" fill="#16a34a"/>
 <text x="742" y="82" class="legend">Rain binary</text>
-<path d="M84.00,434.73 L594.99,352.87 L924.00,281.90" fill="none" stroke="#dc2626" stroke-width="3"/>
-<circle cx="84.00" cy="434.73" r="4" fill="#dc2626"/>
-<circle cx="594.99" cy="352.87" r="4" fill="#dc2626"/>
-<circle cx="924.00" cy="281.90" r="4" fill="#dc2626"/>
+<path d="M84.00,434.54 L594.99,353.34 L924.00,282.20" fill="none" stroke="#dc2626" stroke-width="3"/>
+<circle cx="84.00" cy="434.54" r="4" fill="#dc2626"/>
+<circle cx="594.99" cy="353.34" r="4" fill="#dc2626"/>
+<circle cx="924.00" cy="282.20" r="4" fill="#dc2626"/>
 <rect x="720" y="94" width="14" height="14" fill="#dc2626"/>
 <text x="742" y="106" class="legend">Rain header</text>
 </svg>

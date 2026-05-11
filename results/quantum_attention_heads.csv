@@ -1,0 +1,7 @@
+dimension,key_count,noise_pct,method,nqubits,trials,top1_accuracy_pct,mean_target_confidence,median_us,p95_us,latency_vs_classical_x,baseline
+256,4,0.0,Catalyst PyQuantumAttentionHead,4,12,100.0,1.0,21.167,23.708,3.1092,classical cosine softmax reference
+256,4,0.0,Classical cosine softmax,0,12,100.0,0.998618,65.8125,68.709,1.0,pure Python reference implementation
+512,16,5.0,Catalyst PyQuantumAttentionHead,4,12,100.0,1.0,152.646,163.042,3.4402,classical cosine softmax reference
+512,16,5.0,Classical cosine softmax,0,12,100.0,0.989069,525.1255,538.75,1.0,pure Python reference implementation
+1024,64,10.0,Catalyst PyQuantumAttentionHead,6,12,100.0,1.0,1288.3125,1337.833,3.3127,classical cosine softmax reference
+1024,64,10.0,Classical cosine softmax,0,12,100.0,0.901295,4267.7495,4339.167,1.0,pure Python reference implementation

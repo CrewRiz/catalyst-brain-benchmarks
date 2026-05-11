@@ -1,4 +1,4 @@
 dimension,raw_world_vector_bytes,json_state_bytes,rain_binary_bytes,rain_header_bytes,rain_vs_json_reduction_x,header_vs_json_reduction_x,header_under_8kb,roundtrip_median_us,roundtrip_p95_us,roundtrip_ok
-1024,4096,4741,545,728,8.6991,6.5124,True,19.6045,22.417,True
-4096,16384,18534,1300,1736,14.2569,10.6763,True,62.958,63.541,True
-10000,40000,45127,2764,3688,16.3267,12.2362,True,141.646,147.208,True
+1024,4096,4741,547,732,8.6673,6.4768,True,19.9165,20.458,True
+4096,16384,18534,1298,1732,14.2789,10.7009,True,63.917,69.959,True
+10000,40000,45127,2763,3684,16.3326,12.2495,True,142.8335,150.708,True

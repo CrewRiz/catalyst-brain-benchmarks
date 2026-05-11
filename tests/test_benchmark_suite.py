@@ -12,6 +12,11 @@ def test_quick_suite_shape():
     assert results["token_discovery"][0]["compact_page_saved_pct"] > 0.0
     assert results["claim_summary"]["tool_selection_top1_pct"] == 100.0
     assert results["deferred_outputs"][-1]["saved_pct"] > 90.0
+    assert all(
+        row["top1_accuracy_pct"] >= 90.0
+        for row in results["quantum_attention_heads"]
+        if row["method"] == "Catalyst PyQuantumAttentionHead"
+    )
     assert results["bind_unbind_correctness"]["perfect_pct"] == 100.0
     assert all(row["value_ok"] for row in results["hkvc_scaling"])
     assert all(row["exact_value_ok"] for row in results["hkvc_path_breakdown"])
@@ -34,6 +39,7 @@ def test_markdown_report_renders():
 
     assert "Token Discovery Savings" in report
     assert "Tool Selection Accuracy" in report
+    assert "Quantum-Inspired Attention Heads" in report
     assert "HKVC Query Scaling" in report
     assert "HKVC Path Breakdown" in report
     assert "Rain State Transfer" in report
@@ -55,6 +61,8 @@ def test_chart_generation(tmp_path):
         "hkvc_path_latency.svg",
         "hkvc_recency_latency.svg",
         "hdc_primitive_latency.svg",
+        "quantum_attention_latency.svg",
+        "quantum_attention_accuracy.svg",
         "chain_correctness.svg",
         "rain_state_transfer.svg",
         "memory_model.svg",

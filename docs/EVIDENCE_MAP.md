@@ -14,6 +14,7 @@ publishing SDK internals, operational secrets, or private business runbooks.
 | HKVC recency position | First/middle/last retrieval correctness and latency are measured. | This is a position probe, not a full adversarial long-context evaluation. |
 | Token efficiency | Progressive tool discovery and deferred output records are compared with full context payloads. | Savings are byte/token estimates for agent context, not provider billing statements. |
 | Tool-routing quality | Deterministic MCP-style query set checks top-1 and top-3 selection accuracy. | Does not claim arbitrary semantic search quality. |
+| Quantum-inspired attention | `PyQuantumAttentionHead` routing accuracy and latency are measured against a cosine softmax reference. | Measures classical public-wheel behavior, not physical quantum acceleration. |
 | Rain state transfer | Rain binary/header size and round-trip checks are measured across dimensions. | Header viability is checked against an 8 KB common limit, not every proxy configuration. |
 | HDC correctness | Bind/unbind recovery and chained composition resonance are tested. | Does not disclose implementation internals. |
 

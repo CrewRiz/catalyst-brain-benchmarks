@@ -131,6 +131,39 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
         },
     )
     _render_line_chart(
+        out_dir / "quantum_attention_latency.svg",
+        title="Quantum-Inspired Attention Head Latency",
+        x_label="Keys",
+        y_label="Median latency (us, log scale)",
+        series={
+            method: [
+                (row["key_count"], row["median_us"])
+                for row in results["quantum_attention_heads"]
+                if row["method"] == method
+            ]
+            for method in _ordered_methods(results["quantum_attention_heads"])
+        },
+        x_scale="log",
+        y_scale="log",
+    )
+    _render_line_chart(
+        out_dir / "quantum_attention_accuracy.svg",
+        title="Quantum-Inspired Attention Routing Accuracy",
+        x_label="Keys",
+        y_label="Top-1 accuracy (%)",
+        series={
+            method: [
+                (row["key_count"], row["top1_accuracy_pct"])
+                for row in results["quantum_attention_heads"]
+                if row["method"] == method
+            ]
+            for method in _ordered_methods(results["quantum_attention_heads"])
+        },
+        x_scale="log",
+        y_min=0.0,
+        y_max=100.0,
+    )
+    _render_line_chart(
         out_dir / "chain_correctness.svg",
         title="Bind/Unbind Correctness Through Chained Composition",
         x_label="Composition depth",

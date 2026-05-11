@@ -16,6 +16,7 @@ only the public SDK API and do not require source access.
 | Tool selection accuracy | Compact discovery still routes task intents to the expected tool |
 | Deferred outputs | Code/tool outputs stay out of context until explicitly fetched |
 | HDC primitives | Bind, unbind, bundle, resonance latency and throughput |
+| Quantum attention heads | Quantum-inspired attention routing accuracy and latency against a classical reference |
 | Bind/unbind correctness | Exact recovery through direct and chained HDC binding |
 | HKVC scaling | Median and p95 query latency as stored entries increase |
 | HKVC path breakdown | Exact indexed hits measured separately from missing-key fallback |
@@ -60,6 +61,8 @@ Charts from the latest checked-in run:
 - [HKVC path latency](charts/hkvc_path_latency.svg)
 - [HKVC recency latency](charts/hkvc_recency_latency.svg)
 - [HDC primitive latency](charts/hdc_primitive_latency.svg)
+- [Quantum attention latency](charts/quantum_attention_latency.svg)
+- [Quantum attention accuracy](charts/quantum_attention_accuracy.svg)
 - [Bind/unbind chain correctness](charts/chain_correctness.svg)
 - [Rain state transfer](charts/rain_state_transfer.svg)
 - [Memory model](charts/memory_model.svg)
@@ -83,6 +86,9 @@ These benchmarks are meant to be reproducible, not rhetorical.
   equal serving behavior, or source access to competitor systems.
 - Catalyst Brain uses classical HDC and quantum-inspired algorithms. This suite
   does not claim physical quantum behavior.
+- Quantum attention benchmarks compare implemented public-wheel routing against
+  a pure-Python cosine softmax reference; they are not claims of quantum
+  hardware acceleration.
 - Token savings are byte/token estimates for agent context payloads, not LLM
   billing statements from a provider.
 - HKVC exact-key hit latency and missing-key fallback latency are reported
