@@ -1,0 +1,25 @@
+tool_count,query,expected,top1,top1_ok,top3_ok,rank,compact_results_bytes,expanded_one_schema_bytes,full_manifest_bytes,compact_saved_pct,expanded_saved_pct
+8,run python code safely in a sandbox,sandbox.execute_python,sandbox.execute_python,True,True,1,861,479,2375,63.7474,79.8316
+8,search repository files for text,repo.search_text,repo.search_text,True,True,1,800,425,2375,66.3158,82.1053
+8,read a local source file,filesystem.read_file,filesystem.read_file,True,True,1,796,398,2375,66.4842,83.2421
+8,create a stripe billing checkout,stripe.create_checkout,stripe.create_checkout,True,True,1,830,461,2375,65.0526,80.5895
+8,deploy a cloudflare worker,cloudflare.deploy_worker,cloudflare.deploy_worker,True,True,1,801,446,2375,66.2737,81.2211
+8,fetch a browser web page,browser.fetch_page,browser.fetch_page,True,True,1,798,398,2375,66.4,83.2421
+8,open a github pull request,github.create_pull_request,github.create_pull_request,True,True,1,808,440,2375,65.9789,81.4737
+8,summarize a long document,docs.summarize_document,docs.summarize_document,True,True,1,799,430,2375,66.3579,81.8947
+50,run python code safely in a sandbox,sandbox.execute_python,sandbox.execute_python,True,True,1,861,479,157623,99.4538,99.6961
+50,search repository files for text,repo.search_text,repo.search_text,True,True,1,934,425,157623,99.4074,99.7304
+50,read a local source file,filesystem.read_file,filesystem.read_file,True,True,1,906,398,157623,99.4252,99.7475
+50,create a stripe billing checkout,stripe.create_checkout,stripe.create_checkout,True,True,1,901,461,157623,99.4284,99.7075
+50,deploy a cloudflare worker,cloudflare.deploy_worker,cloudflare.deploy_worker,True,True,1,801,446,157623,99.4918,99.717
+50,fetch a browser web page,browser.fetch_page,browser.fetch_page,True,True,1,930,398,157623,99.41,99.7475
+50,open a github pull request,github.create_pull_request,github.create_pull_request,True,True,1,938,440,157623,99.4049,99.7209
+50,summarize a long document,docs.summarize_document,docs.summarize_document,True,True,1,939,430,157623,99.4043,99.7272
+100,run python code safely in a sandbox,sandbox.execute_python,sandbox.execute_python,True,True,1,861,479,342489,99.7486,99.8601
+100,search repository files for text,repo.search_text,repo.search_text,True,True,1,934,425,342489,99.7273,99.8759
+100,read a local source file,filesystem.read_file,filesystem.read_file,True,True,1,906,398,342489,99.7355,99.8838
+100,create a stripe billing checkout,stripe.create_checkout,stripe.create_checkout,True,True,1,901,461,342489,99.7369,99.8654
+100,deploy a cloudflare worker,cloudflare.deploy_worker,cloudflare.deploy_worker,True,True,1,801,446,342489,99.7661,99.8698
+100,fetch a browser web page,browser.fetch_page,browser.fetch_page,True,True,1,930,398,342489,99.7285,99.8838
+100,open a github pull request,github.create_pull_request,github.create_pull_request,True,True,1,938,440,342489,99.7261,99.8715
+100,summarize a long document,docs.summarize_document,docs.summarize_document,True,True,1,939,430,342489,99.7258,99.8744

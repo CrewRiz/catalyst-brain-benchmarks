@@ -38,6 +38,25 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
         y_min=0.0,
         y_max=100.0,
     )
+    selection_accuracy = _selection_accuracy_by_count(results["tool_selection_accuracy"])
+    _render_line_chart(
+        out_dir / "tool_selection_accuracy.svg",
+        title="Progressive Discovery: Tool Selection Quality",
+        x_label="Registered tools",
+        y_label="Accuracy (%)",
+        series={
+            "top-1": [
+                (row["tool_count"], row["top1_pct"])
+                for row in selection_accuracy
+            ],
+            "top-3": [
+                (row["tool_count"], row["top3_pct"])
+                for row in selection_accuracy
+            ],
+        },
+        y_min=0.0,
+        y_max=100.0,
+    )
     _render_bar_chart(
         out_dir / "deferred_output_savings.svg",
         title="Deferred Tool Output: Context Kept Out Until Fetch",
@@ -63,6 +82,38 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
                 (row["entries"], row["p95_us"])
                 for row in results["hkvc_scaling"]
             ],
+        },
+    )
+    _render_line_chart(
+        out_dir / "hkvc_path_latency.svg",
+        title="HKVC Exact-Key Hit vs Missing-Key Fallback",
+        x_label="Stored entries",
+        y_label="Median query latency (us)",
+        series={
+            "exact indexed hit": [
+                (row["entries"], row["exact_median_us"])
+                for row in results["hkvc_path_breakdown"]
+            ],
+            "missing-key fallback": [
+                (row["entries"], row["miss_fallback_median_us"])
+                for row in results["hkvc_path_breakdown"]
+            ],
+        },
+    )
+    _render_line_chart(
+        out_dir / "hkvc_recency_latency.svg",
+        title="HKVC Query Latency by Entry Position",
+        x_label="Normalized position in cache",
+        y_label="Median query latency (us)",
+        series={
+            f"{entries} entries": [
+                (row["position_fraction"], row["median_us"])
+                for row in results["hkvc_recency_uniformity"]
+                if row["entries"] == entries
+            ]
+            for entries in sorted(
+                {row["entries"] for row in results["hkvc_recency_uniformity"]}
+            )
         },
     )
     _render_line_chart(
@@ -116,6 +167,28 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
         y_scale="log",
     )
     _render_line_chart(
+        out_dir / "rain_state_transfer.svg",
+        title="Rain Stateless Agent State Transfer Size",
+        x_label="Hypervector dimension",
+        y_label="Bytes (log scale)",
+        series={
+            "JSON state": [
+                (row["dimension"], row["json_state_bytes"])
+                for row in results["rain_state_transfer"]
+            ],
+            "Rain binary": [
+                (row["dimension"], row["rain_binary_bytes"])
+                for row in results["rain_state_transfer"]
+            ],
+            "Rain header": [
+                (row["dimension"], row["rain_header_bytes"])
+                for row in results["rain_state_transfer"]
+            ],
+        },
+        x_scale="log",
+        y_scale="log",
+    )
+    _render_line_chart(
         out_dir / "kv_cache_comparison.svg",
         title="KV-Cache Memory Scaling: Published Methods vs Catalyst Fixed State",
         x_label="Context tokens",
@@ -140,6 +213,24 @@ def _ordered_methods(rows: list[dict[str, Any]]) -> list[str]:
         if method not in methods:
             methods.append(method)
     return methods
+
+
+def _selection_accuracy_by_count(rows: list[dict[str, Any]]) -> list[dict[str, float]]:
+    out: list[dict[str, float]] = []
+    for tool_count in sorted({row["tool_count"] for row in rows}):
+        subset = [row for row in rows if row["tool_count"] == tool_count]
+        out.append(
+            {
+                "tool_count": tool_count,
+                "top1_pct": 100.0
+                * sum(1 for row in subset if row["top1_ok"])
+                / len(subset),
+                "top3_pct": 100.0
+                * sum(1 for row in subset if row["top3_ok"])
+                / len(subset),
+            }
+        )
+    return out
 
 
 def _transform(value: float, scale: str) -> float:
@@ -289,9 +380,10 @@ def _svg_frame(
         y = TOP + plot_h - (plot_h * i / 4)
         lines.append(f'<line x1="{LEFT}" y1="{y:.2f}" x2="{LEFT + plot_w}" y2="{y:.2f}" stroke="#e5e7eb"/>')
         lines.append(f'<text x="{LEFT - 10}" y="{y + 4:.2f}" class="tick" text-anchor="end">{_format_tick(value)}</text>')
+    integer_x_ticks = x_scale == "log" or abs(x_max - x_min) > 10
     for i, value in enumerate(_tick_values(x_min, x_max, x_scale)):
         x = LEFT + plot_w * i / 4
-        lines.append(f'<text x="{x:.2f}" y="{HEIGHT - 48}" class="tick" text-anchor="middle">{_format_tick(value, integer=True)}</text>')
+        lines.append(f'<text x="{x:.2f}" y="{HEIGHT - 48}" class="tick" text-anchor="middle">{_format_tick(value, integer=integer_x_ticks)}</text>')
     lines.append(f'<text x="{LEFT + plot_w / 2}" y="{HEIGHT - 14}" class="axis" text-anchor="middle">{html.escape(x_label)}</text>')
     lines.append(
         f'<text x="20" y="{TOP + plot_h / 2}" class="axis" text-anchor="middle" transform="rotate(-90 20 {TOP + plot_h / 2})">{html.escape(y_label)}</text>'

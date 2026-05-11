@@ -20,11 +20,11 @@
 <text x="74" y="154.00" class="tick" text-anchor="end">1.00</text>
 <line x1="84" y1="46.00" x2="924" y2="46.00" stroke="#e5e7eb"/>
 <text x="74" y="50.00" class="tick" text-anchor="end">1.00</text>
-<text x="84.00" y="492" class="tick" text-anchor="middle">1</text>
-<text x="294.00" y="492" class="tick" text-anchor="middle">3</text>
-<text x="504.00" y="492" class="tick" text-anchor="middle">6</text>
-<text x="714.00" y="492" class="tick" text-anchor="middle">8</text>
-<text x="924.00" y="492" class="tick" text-anchor="middle">10</text>
+<text x="84.00" y="492" class="tick" text-anchor="middle">1.00</text>
+<text x="294.00" y="492" class="tick" text-anchor="middle">3.25</text>
+<text x="504.00" y="492" class="tick" text-anchor="middle">5.50</text>
+<text x="714.00" y="492" class="tick" text-anchor="middle">7.75</text>
+<text x="924.00" y="492" class="tick" text-anchor="middle">10.0</text>
 <text x="504.0" y="526" class="axis" text-anchor="middle">Composition depth</text>
 <text x="20" y="254.0" class="axis" text-anchor="middle" transform="rotate(-90 20 254.0)">Resonance</text>
 <path d="M84.00,254.00 L177.33,254.00 L457.33,254.00 L924.00,254.00" fill="none" stroke="#2563eb" stroke-width="3"/>

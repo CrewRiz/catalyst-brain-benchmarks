@@ -1,0 +1,4 @@
+entries,dimension,exact_median_us,exact_p95_us,exact_value_ok,exact_confidence,miss_fallback_median_us,miss_fallback_p95_us,miss_fallback_returned_value,miss_fallback_confidence,fallback_vs_exact_median_x
+100,1024,11.708,11.834,True,0.011678,830.7705,853.292,True,0.005578,70.9575
+1000,1024,12.084,12.542,True,0.000219,9331.3955,9501.584,True,0.002042,772.2108
+5000,1024,12.042,12.25,True,7.8e-05,47633.7505,48479.5,True,0.001074,3955.6345

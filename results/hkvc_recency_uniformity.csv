@@ -1,0 +1,7 @@
+entries,dimension,bucket,position,position_fraction,median_us,p95_us,value_ok,confidence,position_score,confidence_spread,median_latency_spread_us
+1000,1024,first,0,0.0,11.75,14.333,True,0.0,-0.58662,0.00084,0.625
+1000,1024,middle,500,0.5,12.375,14.916,True,0.000219,0.42629,0.00084,0.625
+1000,1024,last,999,1.0,12.125,13.084,True,0.00084,-0.596567,0.00084,0.625
+5000,1024,first,0,0.0,11.75,12.291,True,0.0,-0.08225,0.00055,0.458
+5000,1024,middle,2500,0.5,12.208,12.292,True,7.8e-05,0.31511,0.00055,0.458
+5000,1024,last,4999,1.0,12.042,12.125,True,0.00055,-0.640229,0.00055,0.458
