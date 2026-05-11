@@ -13,6 +13,14 @@ def test_quick_suite_shape():
     assert results["deferred_outputs"][-1]["saved_pct"] > 90.0
     assert results["bind_unbind_correctness"]["perfect_pct"] == 100.0
     assert all(row["value_ok"] for row in results["hkvc_scaling"])
+    assert {row["method"] for row in results["kv_cache_comparison"]} == {
+        "FP16 KV cache",
+        "TurboQuant 3.5-bit",
+        "KIVI 2-bit",
+        "PyramidKV 12%",
+        "Catalyst Brain HKVC",
+    }
+    assert results["claim_summary"]["largest_kv_reduction_vs_fp16_x"] > 1_000_000
 
 
 def test_markdown_report_renders():
@@ -22,4 +30,23 @@ def test_markdown_report_renders():
 
     assert "Token Discovery Savings" in report
     assert "HKVC Query Scaling" in report
+    assert "KV-Cache Competitor Model" in report
     assert "Memory Model" in report
+
+
+def test_chart_generation(tmp_path):
+    from catalyst_brain_benchmarks.benchmarks import run_suite
+    from catalyst_brain_benchmarks.charts import render_all_charts
+
+    render_all_charts(run_suite(mode="quick"), tmp_path)
+
+    expected = {
+        "token_savings.svg",
+        "deferred_output_savings.svg",
+        "hkvc_query_latency.svg",
+        "hdc_primitive_latency.svg",
+        "chain_correctness.svg",
+        "memory_model.svg",
+        "kv_cache_comparison.svg",
+    }
+    assert expected == {path.name for path in tmp_path.iterdir()}

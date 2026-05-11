@@ -18,6 +18,7 @@ only the public SDK API and do not require source access.
 | Bind/unbind correctness | Exact recovery through direct and chained HDC binding |
 | HKVC scaling | Median and p95 query latency as stored entries increase |
 | Memory model | Explicit FP16 KV-cache model compared with fixed Catalyst Rain state |
+| KV-cache comparison | FP16, TurboQuant, KIVI, PyramidKV, and Catalyst HKVC memory-model comparison |
 
 ## Quick Start
 
@@ -51,7 +52,13 @@ Charts from the latest checked-in run:
 - [Token savings](charts/token_savings.svg)
 - [Deferred output savings](charts/deferred_output_savings.svg)
 - [HKVC query latency](charts/hkvc_query_latency.svg)
+- [HDC primitive latency](charts/hdc_primitive_latency.svg)
+- [Bind/unbind chain correctness](charts/chain_correctness.svg)
 - [Memory model](charts/memory_model.svg)
+- [KV-cache comparison](charts/kv_cache_comparison.svg)
+
+Comparison assumptions and primary paper links are documented in
+[docs/SOURCES.md](docs/SOURCES.md).
 
 ## Claim Discipline
 
@@ -62,6 +69,9 @@ These benchmarks are meant to be reproducible, not rhetorical.
 - The memory chart is an explicit model, not process RSS. It compares a stated
   FP16 transformer KV-cache formula with the SDK's fixed world-vector size and
   measured compressed Rain header size.
+- The KV-cache comparison chart models memory footprint from published
+  compression or retention targets. It does not claim equal model quality,
+  equal serving behavior, or source access to competitor systems.
 - Catalyst Brain uses classical HDC and quantum-inspired algorithms. This suite
   does not claim physical quantum behavior.
 - Token savings are byte/token estimates for agent context payloads, not LLM

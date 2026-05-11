@@ -11,15 +11,15 @@
 <line x1="84" y1="462" x2="924" y2="462" stroke="#111827"/>
 <line x1="84" y1="46" x2="84" y2="462" stroke="#111827"/>
 <line x1="84" y1="462.00" x2="924" y2="462.00" stroke="#e5e7eb"/>
-<text x="74" y="466.00" class="tick" text-anchor="end">0.00</text>
+<text x="74" y="466.00" class="tick" text-anchor="end">0</text>
 <line x1="84" y1="358.00" x2="924" y2="358.00" stroke="#e5e7eb"/>
-<text x="74" y="362.00" class="tick" text-anchor="end">25.00</text>
+<text x="74" y="362.00" class="tick" text-anchor="end">25.0</text>
 <line x1="84" y1="254.00" x2="924" y2="254.00" stroke="#e5e7eb"/>
-<text x="74" y="258.00" class="tick" text-anchor="end">50.00</text>
+<text x="74" y="258.00" class="tick" text-anchor="end">50.0</text>
 <line x1="84" y1="150.00" x2="924" y2="150.00" stroke="#e5e7eb"/>
-<text x="74" y="154.00" class="tick" text-anchor="end">75.00</text>
+<text x="74" y="154.00" class="tick" text-anchor="end">75.0</text>
 <line x1="84" y1="46.00" x2="924" y2="46.00" stroke="#e5e7eb"/>
-<text x="74" y="50.00" class="tick" text-anchor="end">100.00</text>
+<text x="74" y="50.00" class="tick" text-anchor="end">100.0</text>
 <text x="84.00" y="492" class="tick" text-anchor="middle">10</text>
 <text x="294.00" y="492" class="tick" text-anchor="middle">32</text>
 <text x="504.00" y="492" class="tick" text-anchor="middle">55</text>

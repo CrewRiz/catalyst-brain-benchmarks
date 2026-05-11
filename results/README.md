@@ -4,7 +4,18 @@
 - Mode: `quick`
 - Platform: `macOS-26.4-arm64-arm-64bit-Mach-O`
 - Python: `3.13.13`
-- Started: `2026-05-10T23:50:00.973460+00:00`
+- Started: `2026-05-11T03:25:49.843968+00:00`
+
+## Headline Checks
+
+| Check | Result |
+|---|---:|
+| Best progressive discovery context saved | 99.56% |
+| Best deferred-output context saved | 99.72% |
+| Largest modeled KV context | 128000 tokens |
+| Catalyst HKVC memory at largest context | 0.016384 MB |
+| Catalyst HKVC reduction versus FP16 model | 5120000.00x |
+| HKVC median latency span across quick scaling run | 0.4585 us |
 
 ## Install Smoke
 
@@ -37,9 +48,21 @@
 
 | Entries | Median query us | p95 query us | Value OK | Confidence |
 |---:|---:|---:|---:|---:|
-| 100 | 11.5410 | 11.9580 | `True` | 0.0117 |
-| 1000 | 12.0410 | 12.2090 | `True` | 0.0002 |
-| 5000 | 12.0420 | 12.1670 | `True` | 0.0001 |
+| 100 | 11.7915 | 12.0000 | `True` | 0.0117 |
+| 1000 | 12.2920 | 12.5410 | `True` | 0.0002 |
+| 5000 | 12.2500 | 12.7500 | `True` | 0.0001 |
+
+## KV-Cache Competitor Model
+
+This table is a stated memory model at the largest context in the run. It compares published compression or retention targets against the fixed Catalyst Brain public SDK state size. It is not an end-to-end quality benchmark.
+
+| Method | Memory MB | Reduction vs FP16 | Shape | Source |
+|---|---:|---:|---|---|
+| FP16 KV cache | 83886.080000 | 1.00x | linear | standard transformer KV-cache model |
+| TurboQuant 3.5-bit | 18350.080000 | 4.57x | linear compressed | arXiv:2504.19874 |
+| KIVI 2-bit | 10485.760000 | 8.00x | linear compressed | arXiv:2402.02750 |
+| PyramidKV 12% | 10066.329600 | 8.33x | linear retained | arXiv:2406.02069 |
+| Catalyst Brain HKVC | 0.016384 | 5120000.00x | fixed state | public catalyst-brain SDK |
 
 ## HDC Correctness
 
@@ -64,3 +87,4 @@ This is an explicit model, not process RSS: standard FP16 KV cache is computed a
 | 5000 | 3276.8000 | 0.016384 | 0.001764 | 200000.00x | 1857596.37x |
 | 10000 | 6553.6000 | 0.016384 | 0.001764 | 400000.00x | 3715192.74x |
 | 50000 | 32768.0000 | 0.016384 | 0.001764 | 2000000.00x | 18575963.72x |
+| 128000 | 83886.0800 | 0.016384 | 0.001764 | 5120000.00x | 47554467.12x |

@@ -13,3 +13,4 @@ __pycache__/
 # results/latest.* and charts/*.svg.
 results/local/
 results/tmp/
+results/charts/

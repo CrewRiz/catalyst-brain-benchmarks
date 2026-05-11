@@ -1,0 +1,31 @@
+tokens,method,family,shape,memory_mb,relative_to_fp16_pct,reduction_vs_fp16_x,source,assumption
+1000,FP16 KV cache,baseline,linear,655.36,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+1000,TurboQuant 3.5-bit,quantization,linear compressed,143.36,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+1000,KIVI 2-bit,quantization,linear compressed,81.92,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+1000,PyramidKV 12%,retention,linear retained,78.6432,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+1000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,0.0025,40000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"
+4000,FP16 KV cache,baseline,linear,2621.44,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+4000,TurboQuant 3.5-bit,quantization,linear compressed,573.44,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+4000,KIVI 2-bit,quantization,linear compressed,327.68,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+4000,PyramidKV 12%,retention,linear retained,314.5728,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+4000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,0.000625,160000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"
+16000,FP16 KV cache,baseline,linear,10485.76,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+16000,TurboQuant 3.5-bit,quantization,linear compressed,2293.76,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+16000,KIVI 2-bit,quantization,linear compressed,1310.72,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+16000,PyramidKV 12%,retention,linear retained,1258.2912,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+16000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,0.00015625,640000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"
+32000,FP16 KV cache,baseline,linear,20971.52,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+32000,TurboQuant 3.5-bit,quantization,linear compressed,4587.52,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+32000,KIVI 2-bit,quantization,linear compressed,2621.44,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+32000,PyramidKV 12%,retention,linear retained,2516.5824,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+32000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,7.813e-05,1280000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"
+64000,FP16 KV cache,baseline,linear,41943.04,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+64000,TurboQuant 3.5-bit,quantization,linear compressed,9175.04,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+64000,KIVI 2-bit,quantization,linear compressed,5242.88,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+64000,PyramidKV 12%,retention,linear retained,5033.1648,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+64000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,3.906e-05,2560000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"
+128000,FP16 KV cache,baseline,linear,83886.08,100.0,1.0,standard transformer KV-cache model,tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes
+128000,TurboQuant 3.5-bit,quantization,linear compressed,18350.08,21.875,4.5714,arXiv:2504.19874,3.5 bits per channel quality-neutral KV-cache point
+128000,KIVI 2-bit,quantization,linear compressed,10485.76,12.5,8.0,arXiv:2402.02750,KV-only 2-bit quantization model versus FP16 KV cache
+128000,PyramidKV 12%,retention,linear retained,10066.3296,12.0,8.3333,arXiv:2406.02069,12% retained KV cache setting reported against full KV cache
+128000,Catalyst Brain HKVC,holographic fixed state,fixed state,0.016384,1.953e-05,5120000.0,public catalyst-brain SDK,"4096-dim public SDK world-vector state, not SDK source internals"

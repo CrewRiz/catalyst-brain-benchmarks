@@ -16,6 +16,47 @@ from catalyst_brain import CatalystTokenKernel, ToolSpec
 
 
 SDK_VERSION = "1.3.2"
+KV_MODEL_LAYERS = 40
+KV_MODEL_HIDDEN_SIZE = 4096
+KV_MODEL_KV_TENSORS = 2
+KV_MODEL_FP16_BYTES = 2
+CATALYST_STATE_DIM = 4096
+
+
+KV_CACHE_METHODS = (
+    {
+        "method": "FP16 KV cache",
+        "family": "baseline",
+        "shape": "linear",
+        "bytes_multiplier": 1.0,
+        "source": "standard transformer KV-cache model",
+        "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+    },
+    {
+        "method": "TurboQuant 3.5-bit",
+        "family": "quantization",
+        "shape": "linear compressed",
+        "bytes_multiplier": 3.5 / 16.0,
+        "source": "arXiv:2504.19874",
+        "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+    },
+    {
+        "method": "KIVI 2-bit",
+        "family": "quantization",
+        "shape": "linear compressed",
+        "bytes_multiplier": 2.0 / 16.0,
+        "source": "arXiv:2402.02750",
+        "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+    },
+    {
+        "method": "PyramidKV 12%",
+        "family": "retention",
+        "shape": "linear retained",
+        "bytes_multiplier": 0.12,
+        "source": "arXiv:2406.02069",
+        "assumption": "12% retained KV cache setting reported against full KV cache",
+    },
+)
 
 
 def _json_bytes(value: Any) -> int:
@@ -278,20 +319,26 @@ def benchmark_hkvc_scaling(*, mode: str) -> list[dict[str, Any]]:
     return rows
 
 
+def _fp16_kv_cache_bytes(token_count: int) -> int:
+    return (
+        token_count
+        * KV_MODEL_LAYERS
+        * KV_MODEL_HIDDEN_SIZE
+        * KV_MODEL_KV_TENSORS
+        * KV_MODEL_FP16_BYTES
+    )
+
+
 def benchmark_memory_model() -> list[dict[str, Any]]:
-    tokens = [1000, 5000, 10000, 50000]
-    layers = 40
-    hidden_size = 4096
-    kv_tensors = 2
-    fp16_bytes = 2
-    kernel = CatalystTokenKernel(dim=4096)
+    tokens = [1000, 5000, 10000, 50000, 128000]
+    kernel = CatalystTokenKernel(dim=CATALYST_STATE_DIM)
     catalyst_rain_header_bytes = kernel.export_rain_snapshot(agent_id="memory-model")[
         "compact_state_bytes"
     ]
-    catalyst_world_vector_bytes = 4096 * 4
+    catalyst_world_vector_bytes = CATALYST_STATE_DIM * 4
     rows: list[dict[str, Any]] = []
     for token_count in tokens:
-        standard_bytes = token_count * layers * hidden_size * kv_tensors * fp16_bytes
+        standard_bytes = _fp16_kv_cache_bytes(token_count)
         rows.append(
             {
                 "tokens": token_count,
@@ -306,13 +353,81 @@ def benchmark_memory_model() -> list[dict[str, Any]]:
     return rows
 
 
+def benchmark_kv_cache_comparison() -> list[dict[str, Any]]:
+    token_counts = [1000, 4000, 16000, 32000, 64000, 128000]
+    catalyst_state_bytes = CATALYST_STATE_DIM * 4
+    rows: list[dict[str, Any]] = []
+    for token_count in token_counts:
+        baseline_bytes = _fp16_kv_cache_bytes(token_count)
+        for method in KV_CACHE_METHODS:
+            modeled_bytes = int(baseline_bytes * method["bytes_multiplier"])
+            rows.append(
+                {
+                    "tokens": token_count,
+                    "method": method["method"],
+                    "family": method["family"],
+                    "shape": method["shape"],
+                    "memory_mb": round(modeled_bytes / 1_000_000.0, 6),
+                    "relative_to_fp16_pct": round(100.0 * method["bytes_multiplier"], 4),
+                    "reduction_vs_fp16_x": round(1.0 / method["bytes_multiplier"], 4),
+                    "source": method["source"],
+                    "assumption": method["assumption"],
+                }
+            )
+        rows.append(
+            {
+                "tokens": token_count,
+                "method": "Catalyst Brain HKVC",
+                "family": "holographic fixed state",
+                "shape": "fixed state",
+                "memory_mb": round(catalyst_state_bytes / 1_000_000.0, 6),
+                "relative_to_fp16_pct": round(100.0 * catalyst_state_bytes / baseline_bytes, 8),
+                "reduction_vs_fp16_x": round(baseline_bytes / catalyst_state_bytes, 4),
+                "source": "public catalyst-brain SDK",
+                "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+            }
+        )
+    return rows
+
+
+def summarize_benchmark_claims(results: dict[str, Any]) -> dict[str, Any]:
+    token_best = max(
+        row["compact_discovery_saved_pct"] for row in results["token_discovery"]
+    )
+    deferred_best = max(row["saved_pct"] for row in results["deferred_outputs"])
+    largest_kv = max(
+        (
+            row
+            for row in results["kv_cache_comparison"]
+            if row["method"] == "Catalyst Brain HKVC"
+        ),
+        key=lambda row: row["tokens"],
+    )
+    hkvc_rows = results["hkvc_scaling"]
+    latency_span_us = hkvc_rows[-1]["median_us"] - hkvc_rows[0]["median_us"]
+    return {
+        "best_compact_discovery_saved_pct": round(token_best, 4),
+        "best_deferred_output_saved_pct": round(deferred_best, 4),
+        "largest_kv_context_tokens": largest_kv["tokens"],
+        "largest_kv_catalyst_memory_mb": largest_kv["memory_mb"],
+        "largest_kv_reduction_vs_fp16_x": largest_kv["reduction_vs_fp16_x"],
+        "hkvc_first_entries": hkvc_rows[0]["entries"],
+        "hkvc_last_entries": hkvc_rows[-1]["entries"],
+        "hkvc_median_latency_span_us": round(latency_span_us, 4),
+        "claim_boundary": (
+            "Benchmarks use public catalyst-brain APIs and explicit memory models; "
+            "they are not SDK source disclosures or provider billing statements."
+        ),
+    }
+
+
 def run_suite(*, mode: str = "quick") -> dict[str, Any]:
     if mode not in {"quick", "full"}:
         raise ValueError("mode must be 'quick' or 'full'")
     started = datetime.now(timezone.utc)
     results = {
         "metadata": {
-            "suite_version": "0.1.0",
+            "suite_version": "0.2.0",
             "mode": mode,
             "started_at": started.isoformat(),
             "python": platform.python_version(),
@@ -330,7 +445,9 @@ def run_suite(*, mode: str = "quick") -> dict[str, Any]:
         "bind_unbind_correctness": benchmark_bind_unbind_correctness(mode=mode),
         "hkvc_scaling": benchmark_hkvc_scaling(mode=mode),
         "memory_model": benchmark_memory_model(),
+        "kv_cache_comparison": benchmark_kv_cache_comparison(),
     }
+    results["claim_summary"] = summarize_benchmark_claims(results)
     results["metadata"]["finished_at"] = datetime.now(timezone.utc).isoformat()
     return results
 
@@ -365,6 +482,7 @@ def render_markdown_report(results: dict[str, Any]) -> str:
     meta = results["metadata"]
     smoke = results["install_smoke"]
     correctness = results["bind_unbind_correctness"]
+    summary = results["claim_summary"]
     lines = [
         "# Catalyst Brain Benchmark Results",
         "",
@@ -373,6 +491,35 @@ def render_markdown_report(results: dict[str, Any]) -> str:
         f"- Platform: `{meta['platform']}`",
         f"- Python: `{meta['python']}`",
         f"- Started: `{meta['started_at']}`",
+        "",
+        "## Headline Checks",
+        "",
+        "| Check | Result |",
+        "|---|---:|",
+        (
+            "| Best progressive discovery context saved | "
+            f"{summary['best_compact_discovery_saved_pct']:.2f}% |"
+        ),
+        (
+            "| Best deferred-output context saved | "
+            f"{summary['best_deferred_output_saved_pct']:.2f}% |"
+        ),
+        (
+            "| Largest modeled KV context | "
+            f"{summary['largest_kv_context_tokens']} tokens |"
+        ),
+        (
+            "| Catalyst HKVC memory at largest context | "
+            f"{summary['largest_kv_catalyst_memory_mb']:.6f} MB |"
+        ),
+        (
+            "| Catalyst HKVC reduction versus FP16 model | "
+            f"{summary['largest_kv_reduction_vs_fp16_x']:.2f}x |"
+        ),
+        (
+            "| HKVC median latency span across quick scaling run | "
+            f"{summary['hkvc_median_latency_span_us']:.4f} us |"
+        ),
         "",
         "## Install Smoke",
         "",
@@ -424,6 +571,29 @@ def render_markdown_report(results: dict[str, Any]) -> str:
             "| {entries} | {median_us:.4f} | {p95_us:.4f} | `{value_ok}` | {confidence:.4f} |".format(
                 **row
             )
+        )
+    largest_tokens = max(row["tokens"] for row in results["kv_cache_comparison"])
+    largest_rows = [
+        row for row in results["kv_cache_comparison"] if row["tokens"] == largest_tokens
+    ]
+    lines.extend(
+        [
+            "",
+            "## KV-Cache Competitor Model",
+            "",
+            "This table is a stated memory model at the largest context in the run. "
+            "It compares published compression or retention targets against the "
+            "fixed Catalyst Brain public SDK state size. It is not an end-to-end "
+            "quality benchmark.",
+            "",
+            "| Method | Memory MB | Reduction vs FP16 | Shape | Source |",
+            "|---|---:|---:|---|---|",
+        ]
+    )
+    for row in largest_rows:
+        lines.append(
+            "| {method} | {memory_mb:.6f} | {reduction_vs_fp16_x:.2f}x | "
+            "{shape} | {source} |".format(**row)
         )
     lines.extend(
         [

@@ -24,6 +24,17 @@
     "perfect_trials": 100,
     "trials": 100
   },
+  "claim_summary": {
+    "best_compact_discovery_saved_pct": 99.5603,
+    "best_deferred_output_saved_pct": 99.7208,
+    "claim_boundary": "Benchmarks use public catalyst-brain APIs and explicit memory models; they are not SDK source disclosures or provider billing statements.",
+    "hkvc_first_entries": 100,
+    "hkvc_last_entries": 5000,
+    "hkvc_median_latency_span_us": 0.4585,
+    "largest_kv_catalyst_memory_mb": 0.016384,
+    "largest_kv_context_tokens": 128000,
+    "largest_kv_reduction_vs_fp16_x": 5120000.0
+  },
   "deferred_outputs": [
     {
       "compact_status_bytes": 301,
@@ -56,123 +67,123 @@
   "hdc_primitives": [
     {
       "dimension": 128,
-      "elements_per_second_median": 47267355.98,
-      "max_us": 2.958,
-      "mean_us": 2.7016,
-      "median_us": 2.708,
-      "min_us": 2.666,
+      "elements_per_second_median": 41518001.95,
+      "max_us": 3.416,
+      "mean_us": 3.0758,
+      "median_us": 3.083,
+      "min_us": 3.0,
       "operation": "bind",
-      "p95_us": 2.75
+      "p95_us": 3.125
     },
     {
       "dimension": 128,
-      "elements_per_second_median": 45165843.33,
-      "max_us": 3.708,
-      "mean_us": 2.8683,
-      "median_us": 2.834,
-      "min_us": 2.792,
+      "elements_per_second_median": 40960000.0,
+      "max_us": 3.25,
+      "mean_us": 3.1408,
+      "median_us": 3.125,
+      "min_us": 3.083,
       "operation": "unbind",
-      "p95_us": 2.916
+      "p95_us": 3.167
     },
     {
       "dimension": 128,
-      "elements_per_second_median": 47994000.75,
-      "max_us": 2.75,
-      "mean_us": 2.685,
-      "median_us": 2.667,
-      "min_us": 2.625,
+      "elements_per_second_median": 42084497.78,
+      "max_us": 3.125,
+      "mean_us": 3.0374,
+      "median_us": 3.0415,
+      "min_us": 3.0,
       "operation": "bundle",
-      "p95_us": 2.709
+      "p95_us": 3.083
     },
     {
       "dimension": 128,
-      "elements_per_second_median": 61420345.49,
-      "max_us": 2.125,
-      "mean_us": 2.0777,
-      "median_us": 2.084,
-      "min_us": 2.041,
+      "elements_per_second_median": 53894736.84,
+      "max_us": 2.417,
+      "mean_us": 2.3683,
+      "median_us": 2.375,
+      "min_us": 2.292,
       "operation": "resonance",
-      "p95_us": 2.125
+      "p95_us": 2.417
     },
     {
       "dimension": 1024,
-      "elements_per_second_median": 40025015.63,
-      "max_us": 30.333,
-      "mean_us": 25.7574,
-      "median_us": 25.584,
-      "min_us": 25.417,
+      "elements_per_second_median": 36274110.42,
+      "max_us": 30.875,
+      "mean_us": 28.3966,
+      "median_us": 28.2295,
+      "min_us": 28.041,
       "operation": "bind",
-      "p95_us": 25.792
+      "p95_us": 30.083
     },
     {
       "dimension": 1024,
-      "elements_per_second_median": 39960975.61,
-      "max_us": 35.167,
-      "mean_us": 26.1558,
-      "median_us": 25.625,
-      "min_us": 25.5,
+      "elements_per_second_median": 36088105.73,
+      "max_us": 31.042,
+      "mean_us": 28.4408,
+      "median_us": 28.375,
+      "min_us": 28.25,
       "operation": "unbind",
-      "p95_us": 29.583
+      "p95_us": 28.708
     },
     {
       "dimension": 1024,
-      "elements_per_second_median": 39830409.58,
-      "max_us": 28.375,
-      "mean_us": 25.9866,
-      "median_us": 25.709,
-      "min_us": 25.458,
+      "elements_per_second_median": 36247787.61,
+      "max_us": 30.875,
+      "mean_us": 28.3166,
+      "median_us": 28.25,
+      "min_us": 28.125,
       "operation": "bundle",
-      "p95_us": 28.333
+      "p95_us": 28.417
     },
     {
       "dimension": 1024,
-      "elements_per_second_median": 55980756.61,
-      "max_us": 28.583,
-      "mean_us": 18.4808,
-      "median_us": 18.292,
-      "min_us": 18.125,
+      "elements_per_second_median": 50881987.58,
+      "max_us": 22.542,
+      "mean_us": 20.2324,
+      "median_us": 20.125,
+      "min_us": 20.0,
       "operation": "resonance",
-      "p95_us": 18.458
+      "p95_us": 20.458
     },
     {
       "dimension": 4096,
-      "elements_per_second_median": 40272151.65,
-      "max_us": 129.916,
-      "mean_us": 102.9883,
-      "median_us": 101.708,
-      "min_us": 101.416,
+      "elements_per_second_median": 35753409.71,
+      "max_us": 130.625,
+      "mean_us": 115.6066,
+      "median_us": 114.5625,
+      "min_us": 113.75,
       "operation": "bind",
-      "p95_us": 111.084
+      "p95_us": 122.5
     },
     {
       "dimension": 4096,
-      "elements_per_second_median": 40050649.99,
-      "max_us": 124.958,
-      "mean_us": 105.1949,
-      "median_us": 102.2705,
-      "min_us": 101.292,
+      "elements_per_second_median": 35923207.13,
+      "max_us": 153.625,
+      "mean_us": 114.9884,
+      "median_us": 114.021,
+      "min_us": 113.166,
       "operation": "unbind",
-      "p95_us": 112.292
+      "p95_us": 117.084
     },
     {
       "dimension": 4096,
-      "elements_per_second_median": 40140531.06,
-      "max_us": 116.166,
-      "mean_us": 104.845,
-      "median_us": 102.0415,
-      "min_us": 101.208,
+      "elements_per_second_median": 35870826.49,
+      "max_us": 124.042,
+      "mean_us": 115.1583,
+      "median_us": 114.1875,
+      "min_us": 113.583,
       "operation": "bundle",
-      "p95_us": 114.834
+      "p95_us": 121.084
     },
     {
       "dimension": 4096,
-      "elements_per_second_median": 55759753.87,
-      "max_us": 86.625,
-      "mean_us": 74.0083,
-      "median_us": 73.458,
-      "min_us": 72.583,
+      "elements_per_second_median": 49837262.36,
+      "max_us": 94.25,
+      "mean_us": 83.0058,
+      "median_us": 82.1875,
+      "min_us": 81.291,
       "operation": "resonance",
-      "p95_us": 78.291
+      "p95_us": 87.083
     }
   ],
   "hkvc_scaling": [
@@ -180,39 +191,39 @@
       "confidence": 0.011678,
       "dimension": 1024,
       "entries": 100,
-      "max_us": 15.125,
-      "mean_us": 11.4713,
-      "median_us": 11.541,
-      "min_us": 10.416,
-      "p95_us": 11.958,
-      "store_per_second": 26414.85,
-      "store_seconds": 0.003786,
+      "max_us": 16.375,
+      "mean_us": 11.8921,
+      "median_us": 11.7915,
+      "min_us": 11.666,
+      "p95_us": 12.0,
+      "store_per_second": 24911.51,
+      "store_seconds": 0.004014,
       "value_ok": true
     },
     {
       "confidence": 0.000219,
       "dimension": 1024,
       "entries": 1000,
-      "max_us": 12.333,
-      "mean_us": 11.5797,
-      "median_us": 12.041,
-      "min_us": 10.875,
-      "p95_us": 12.209,
-      "store_per_second": 25247.66,
-      "store_seconds": 0.039608,
+      "max_us": 14.917,
+      "mean_us": 12.377,
+      "median_us": 12.292,
+      "min_us": 12.208,
+      "p95_us": 12.541,
+      "store_per_second": 23902.22,
+      "store_seconds": 0.041837,
       "value_ok": true
     },
     {
       "confidence": 7.8e-05,
       "dimension": 1024,
       "entries": 5000,
-      "max_us": 13.375,
-      "mean_us": 11.9026,
-      "median_us": 12.042,
-      "min_us": 10.916,
-      "p95_us": 12.167,
-      "store_per_second": 25219.26,
-      "store_seconds": 0.198261,
+      "max_us": 14.542,
+      "mean_us": 12.3302,
+      "median_us": 12.25,
+      "min_us": 12.166,
+      "p95_us": 12.75,
+      "store_per_second": 23988.47,
+      "store_seconds": 0.208433,
       "value_ok": true
     }
   ],
@@ -224,6 +235,338 @@
     "module_version": "1.3.2",
     "version_ok": true
   },
+  "kv_cache_comparison": [
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 655.36,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 1000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 143.36,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 1000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 81.92,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 1000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 78.6432,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 1000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 40000.0,
+      "relative_to_fp16_pct": 0.0025,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 1000
+    },
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 2621.44,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 4000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 573.44,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 4000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 327.68,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 4000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 314.5728,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 4000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 160000.0,
+      "relative_to_fp16_pct": 0.000625,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 4000
+    },
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 10485.76,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 16000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 2293.76,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 16000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 1310.72,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 16000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 1258.2912,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 16000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 640000.0,
+      "relative_to_fp16_pct": 0.00015625,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 16000
+    },
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 20971.52,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 32000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 4587.52,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 32000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 2621.44,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 32000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 2516.5824,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 32000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 1280000.0,
+      "relative_to_fp16_pct": 7.813e-05,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 32000
+    },
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 41943.04,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 64000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 9175.04,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 64000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 5242.88,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 64000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 5033.1648,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 64000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 2560000.0,
+      "relative_to_fp16_pct": 3.906e-05,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 64000
+    },
+    {
+      "assumption": "tokens * layers * hidden * 2 K/V tensors * 2 FP16 bytes",
+      "family": "baseline",
+      "memory_mb": 83886.08,
+      "method": "FP16 KV cache",
+      "reduction_vs_fp16_x": 1.0,
+      "relative_to_fp16_pct": 100.0,
+      "shape": "linear",
+      "source": "standard transformer KV-cache model",
+      "tokens": 128000
+    },
+    {
+      "assumption": "3.5 bits per channel quality-neutral KV-cache point",
+      "family": "quantization",
+      "memory_mb": 18350.08,
+      "method": "TurboQuant 3.5-bit",
+      "reduction_vs_fp16_x": 4.5714,
+      "relative_to_fp16_pct": 21.875,
+      "shape": "linear compressed",
+      "source": "arXiv:2504.19874",
+      "tokens": 128000
+    },
+    {
+      "assumption": "KV-only 2-bit quantization model versus FP16 KV cache",
+      "family": "quantization",
+      "memory_mb": 10485.76,
+      "method": "KIVI 2-bit",
+      "reduction_vs_fp16_x": 8.0,
+      "relative_to_fp16_pct": 12.5,
+      "shape": "linear compressed",
+      "source": "arXiv:2402.02750",
+      "tokens": 128000
+    },
+    {
+      "assumption": "12% retained KV cache setting reported against full KV cache",
+      "family": "retention",
+      "memory_mb": 10066.3296,
+      "method": "PyramidKV 12%",
+      "reduction_vs_fp16_x": 8.3333,
+      "relative_to_fp16_pct": 12.0,
+      "shape": "linear retained",
+      "source": "arXiv:2406.02069",
+      "tokens": 128000
+    },
+    {
+      "assumption": "4096-dim public SDK world-vector state, not SDK source internals",
+      "family": "holographic fixed state",
+      "memory_mb": 0.016384,
+      "method": "Catalyst Brain HKVC",
+      "reduction_vs_fp16_x": 5120000.0,
+      "relative_to_fp16_pct": 1.953e-05,
+      "shape": "fixed state",
+      "source": "public catalyst-brain SDK",
+      "tokens": 128000
+    }
+  ],
   "memory_model": [
     {
       "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
@@ -260,20 +603,29 @@
       "standard_kv_cache_mb": 32768.0,
       "tokens": 50000,
       "world_vector_reduction_x": 2000000.0
+    },
+    {
+      "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
+      "catalyst_rain_header_mb": 0.001764,
+      "catalyst_world_vector_mb": 0.016384,
+      "rain_header_reduction_x": 47554467.12,
+      "standard_kv_cache_mb": 83886.08,
+      "tokens": 128000,
+      "world_vector_reduction_x": 5120000.0
     }
   ],
   "metadata": {
     "catalyst_brain_distribution": "1.3.2",
     "catalyst_brain_version": "1.3.2",
-    "finished_at": "2026-05-10T23:50:01.419792+00:00",
+    "finished_at": "2026-05-11T03:25:50.323711+00:00",
     "machine": "arm64",
     "mode": "quick",
     "platform": "macOS-26.4-arm64-arm-64bit-Mach-O",
     "processor": "arm",
     "python": "3.13.13",
     "sdk_version_expected": "1.3.2",
-    "started_at": "2026-05-10T23:50:00.973460+00:00",
-    "suite_version": "0.1.0"
+    "started_at": "2026-05-11T03:25:49.843968+00:00",
+    "suite_version": "0.2.0"
   },
   "token_discovery": [
     {

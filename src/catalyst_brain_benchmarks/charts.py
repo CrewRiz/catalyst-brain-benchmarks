@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import math
 from pathlib import Path
 from typing import Any
 
@@ -65,10 +66,38 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
         },
     )
     _render_line_chart(
+        out_dir / "hdc_primitive_latency.svg",
+        title="HDC Primitive Median Latency",
+        x_label="Dimension",
+        y_label="Median latency (us)",
+        series={
+            operation: [
+                (row["dimension"], row["median_us"])
+                for row in results["hdc_primitives"]
+                if row["operation"] == operation
+            ]
+            for operation in ("bind", "unbind", "bundle", "resonance")
+        },
+    )
+    _render_line_chart(
+        out_dir / "chain_correctness.svg",
+        title="Bind/Unbind Correctness Through Chained Composition",
+        x_label="Composition depth",
+        y_label="Resonance",
+        series={
+            "resonance": [
+                (row["depth"], row["resonance"])
+                for row in results["bind_unbind_correctness"]["chained_composition"]
+            ]
+        },
+        y_min=0.999,
+        y_max=1.001,
+    )
+    _render_line_chart(
         out_dir / "memory_model.svg",
         title="Fixed Catalyst State vs Standard FP16 KV Cache Model",
         x_label="Tokens",
-        y_label="Megabytes",
+        y_label="Megabytes (log scale)",
         series={
             "standard FP16 KV cache": [
                 (row["tokens"], row["standard_kv_cache_mb"])
@@ -83,10 +112,50 @@ def render_all_charts(results: dict[str, Any], out_dir: Path) -> None:
                 for row in results["memory_model"]
             ],
         },
+        x_scale="log",
+        y_scale="log",
+    )
+    _render_line_chart(
+        out_dir / "kv_cache_comparison.svg",
+        title="KV-Cache Memory Scaling: Published Methods vs Catalyst Fixed State",
+        x_label="Context tokens",
+        y_label="Modeled memory (MB, log scale)",
+        series={
+            method: [
+                (row["tokens"], row["memory_mb"])
+                for row in results["kv_cache_comparison"]
+                if row["method"] == method
+            ]
+            for method in _ordered_methods(results["kv_cache_comparison"])
+        },
+        x_scale="log",
+        y_scale="log",
     )
 
 
-def _scale_points(points: list[tuple[float, float]], y_min: float | None, y_max: float | None):
+def _ordered_methods(rows: list[dict[str, Any]]) -> list[str]:
+    methods: list[str] = []
+    for row in rows:
+        method = row["method"]
+        if method not in methods:
+            methods.append(method)
+    return methods
+
+
+def _transform(value: float, scale: str) -> float:
+    if scale == "log":
+        return math.log10(max(value, 1e-12))
+    return value
+
+
+def _scale_points(
+    points: list[tuple[float, float]],
+    y_min: float | None,
+    y_max: float | None,
+    *,
+    x_scale: str = "linear",
+    y_scale: str = "linear",
+):
     x_values = [point[0] for point in points]
     y_values = [point[1] for point in points]
     x_min = min(x_values)
@@ -97,13 +166,23 @@ def _scale_points(points: list[tuple[float, float]], y_min: float | None, y_max:
     actual_y_max = max(y_values) if y_max is None else y_max
     if actual_y_min == actual_y_max:
         actual_y_max = actual_y_min + 1.0
+    scaled_x_min = _transform(x_min, x_scale)
+    scaled_x_max = _transform(x_max, x_scale)
+    scaled_y_min = _transform(actual_y_min, y_scale)
+    scaled_y_max = _transform(actual_y_max, y_scale)
+    if scaled_x_min == scaled_x_max:
+        scaled_x_max = scaled_x_min + 1.0
+    if scaled_y_min == scaled_y_max:
+        scaled_y_max = scaled_y_min + 1.0
     plot_w = WIDTH - LEFT - RIGHT
     plot_h = HEIGHT - TOP - BOTTOM
 
     def map_point(point: tuple[float, float]) -> tuple[float, float]:
         x, y = point
-        px = LEFT + ((x - x_min) / (x_max - x_min)) * plot_w
-        py = TOP + (1.0 - ((y - actual_y_min) / (actual_y_max - actual_y_min))) * plot_h
+        scaled_x = _transform(x, x_scale)
+        scaled_y = _transform(y, y_scale)
+        px = LEFT + ((scaled_x - scaled_x_min) / (scaled_x_max - scaled_x_min)) * plot_w
+        py = TOP + (1.0 - ((scaled_y - scaled_y_min) / (scaled_y_max - scaled_y_min))) * plot_h
         return px, py
 
     return map_point, (x_min, x_max, actual_y_min, actual_y_max)
@@ -118,12 +197,32 @@ def _render_line_chart(
     series: dict[str, list[tuple[float, float]]],
     y_min: float | None = None,
     y_max: float | None = None,
+    x_scale: str = "linear",
+    y_scale: str = "linear",
 ) -> None:
     all_points = [point for points in series.values() for point in points]
-    map_point, bounds = _scale_points(all_points, y_min, y_max)
+    map_point, bounds = _scale_points(
+        all_points,
+        y_min,
+        y_max,
+        x_scale=x_scale,
+        y_scale=y_scale,
+    )
     x_min, x_max, actual_y_min, actual_y_max = bounds
-    colors = ["#2563eb", "#16a34a", "#dc2626", "#9333ea"]
-    body = [_svg_frame(title, x_label, y_label, x_min, x_max, actual_y_min, actual_y_max)]
+    colors = ["#2563eb", "#16a34a", "#dc2626", "#9333ea", "#111827", "#f59e0b"]
+    body = [
+        _svg_frame(
+            title,
+            x_label,
+            y_label,
+            x_min,
+            x_max,
+            actual_y_min,
+            actual_y_max,
+            x_scale=x_scale,
+            y_scale=y_scale,
+        )
+    ]
     for idx, (name, points) in enumerate(series.items()):
         color = colors[idx % len(colors)]
         mapped = [map_point(point) for point in points]
@@ -174,6 +273,9 @@ def _svg_frame(
     x_max: float,
     y_min: float,
     y_max: float,
+    *,
+    x_scale: str = "linear",
+    y_scale: str = "linear",
 ) -> str:
     plot_w = WIDTH - LEFT - RIGHT
     plot_h = HEIGHT - TOP - BOTTOM
@@ -183,20 +285,38 @@ def _svg_frame(
         f'<line x1="{LEFT}" y1="{TOP + plot_h}" x2="{LEFT + plot_w}" y2="{TOP + plot_h}" stroke="#111827"/>',
         f'<line x1="{LEFT}" y1="{TOP}" x2="{LEFT}" y2="{TOP + plot_h}" stroke="#111827"/>',
     ]
-    for i in range(5):
+    for i, value in enumerate(_tick_values(y_min, y_max, y_scale)):
         y = TOP + plot_h - (plot_h * i / 4)
-        value = y_min + (y_max - y_min) * i / 4
         lines.append(f'<line x1="{LEFT}" y1="{y:.2f}" x2="{LEFT + plot_w}" y2="{y:.2f}" stroke="#e5e7eb"/>')
-        lines.append(f'<text x="{LEFT - 10}" y="{y + 4:.2f}" class="tick" text-anchor="end">{value:.2f}</text>')
-    for i in range(5):
+        lines.append(f'<text x="{LEFT - 10}" y="{y + 4:.2f}" class="tick" text-anchor="end">{_format_tick(value)}</text>')
+    for i, value in enumerate(_tick_values(x_min, x_max, x_scale)):
         x = LEFT + plot_w * i / 4
-        value = x_min + (x_max - x_min) * i / 4
-        lines.append(f'<text x="{x:.2f}" y="{HEIGHT - 48}" class="tick" text-anchor="middle">{value:.0f}</text>')
+        lines.append(f'<text x="{x:.2f}" y="{HEIGHT - 48}" class="tick" text-anchor="middle">{_format_tick(value, integer=True)}</text>')
     lines.append(f'<text x="{LEFT + plot_w / 2}" y="{HEIGHT - 14}" class="axis" text-anchor="middle">{html.escape(x_label)}</text>')
     lines.append(
         f'<text x="20" y="{TOP + plot_h / 2}" class="axis" text-anchor="middle" transform="rotate(-90 20 {TOP + plot_h / 2})">{html.escape(y_label)}</text>'
     )
     return "\n".join(lines)
+
+
+def _tick_values(start: float, stop: float, scale: str) -> list[float]:
+    if scale == "log":
+        low = _transform(start, "log")
+        high = _transform(stop, "log")
+        return [10 ** (low + (high - low) * i / 4) for i in range(5)]
+    return [start + (stop - start) * i / 4 for i in range(5)]
+
+
+def _format_tick(value: float, *, integer: bool = False) -> str:
+    if integer:
+        return f"{value:,.0f}"
+    if value >= 1000:
+        return f"{value:,.0f}"
+    if value >= 10:
+        return f"{value:.1f}"
+    if value >= 1:
+        return f"{value:.2f}"
+    return f"{value:.4g}"
 
 
 def _wrap_svg(body: str) -> str:
