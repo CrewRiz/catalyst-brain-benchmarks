@@ -1,0 +1,5 @@
+tokens,standard_kv_cache_mb,catalyst_world_vector_mb,catalyst_rain_header_mb,world_vector_reduction_x,rain_header_reduction_x,assumption
+1000,655.36,0.016384,0.001764,40000.0,371519.27,"40 layers, hidden size 4096, FP16 K+V tensors"
+5000,3276.8,0.016384,0.001764,200000.0,1857596.37,"40 layers, hidden size 4096, FP16 K+V tensors"
+10000,6553.6,0.016384,0.001764,400000.0,3715192.74,"40 layers, hidden size 4096, FP16 K+V tensors"
+50000,32768.0,0.016384,0.001764,2000000.0,18575963.72,"40 layers, hidden size 4096, FP16 K+V tensors"

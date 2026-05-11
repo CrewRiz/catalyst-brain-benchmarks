@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+<style>
+.title { font: 700 22px system-ui, -apple-system, Segoe UI, sans-serif; fill: #111827; }
+.axis { font: 600 14px system-ui, -apple-system, Segoe UI, sans-serif; fill: #374151; }
+.tick { font: 12px system-ui, -apple-system, Segoe UI, sans-serif; fill: #4b5563; }
+.legend { font: 13px system-ui, -apple-system, Segoe UI, sans-serif; fill: #111827; }
+.label { font: 700 12px system-ui, -apple-system, Segoe UI, sans-serif; fill: #111827; }
+</style>
+<rect x="0" y="0" width="960" height="540" fill="#ffffff"/>
+<text x="84" y="30" class="title">Deferred Tool Output: Context Kept Out Until Fetch</text>
+<line x1="84" y1="462" x2="924" y2="462" stroke="#111827"/>
+<line x1="84" y1="46" x2="84" y2="462" stroke="#111827"/>
+<line x1="84" y1="462.00" x2="924" y2="462.00" stroke="#e5e7eb"/>
+<text x="74" y="466.00" class="tick" text-anchor="end">0.00</text>
+<line x1="84" y1="358.00" x2="924" y2="358.00" stroke="#e5e7eb"/>
+<text x="74" y="362.00" class="tick" text-anchor="end">25.00</text>
+<line x1="84" y1="254.00" x2="924" y2="254.00" stroke="#e5e7eb"/>
+<text x="74" y="258.00" class="tick" text-anchor="end">50.00</text>
+<line x1="84" y1="150.00" x2="924" y2="150.00" stroke="#e5e7eb"/>
+<text x="74" y="154.00" class="tick" text-anchor="end">75.00</text>
+<line x1="84" y1="46.00" x2="924" y2="46.00" stroke="#e5e7eb"/>
+<text x="74" y="50.00" class="tick" text-anchor="end">100.00</text>
+<text x="84.00" y="492" class="tick" text-anchor="middle">0</text>
+<text x="294.00" y="492" class="tick" text-anchor="middle">0</text>
+<text x="504.00" y="492" class="tick" text-anchor="middle">1</text>
+<text x="714.00" y="492" class="tick" text-anchor="middle">2</text>
+<text x="924.00" y="492" class="tick" text-anchor="middle">2</text>
+<text x="504.0" y="526" class="axis" text-anchor="middle">stdout bytes</text>
+<text x="20" y="254.0" class="axis" text-anchor="middle" transform="rotate(-90 20 254.0)">Saved context (%)</text>
+<rect x="108.00" y="143.75" width="248.00" height="318.25" fill="#2563eb"/>
+<text x="232.00" y="492" class="tick" text-anchor="middle">1000</text>
+<text x="232.00" y="135.75" class="label" text-anchor="middle">76.5%</text>
+<rect x="380.00" y="57.39" width="248.00" height="404.61" fill="#2563eb"/>
+<text x="504.00" y="492" class="tick" text-anchor="middle">10000</text>
+<text x="504.00" y="49.39" class="label" text-anchor="middle">97.3%</text>
+<rect x="652.00" y="47.16" width="248.00" height="414.84" fill="#2563eb"/>
+<text x="776.00" y="492" class="tick" text-anchor="middle">100000</text>
+<text x="776.00" y="39.16" class="label" text-anchor="middle">99.7%</text>
+</svg>

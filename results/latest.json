@@ -1,0 +1,313 @@
+{
+  "bind_unbind_correctness": {
+    "chained_composition": [
+      {
+        "depth": 1,
+        "resonance": 1.0
+      },
+      {
+        "depth": 2,
+        "resonance": 1.0
+      },
+      {
+        "depth": 5,
+        "resonance": 1.0
+      },
+      {
+        "depth": 10,
+        "resonance": 1.0
+      }
+    ],
+    "dimension": 1024,
+    "min_resonance": 1.0,
+    "perfect_pct": 100.0,
+    "perfect_trials": 100,
+    "trials": 100
+  },
+  "deferred_outputs": [
+    {
+      "compact_status_bytes": 301,
+      "full_result_bytes": 1281,
+      "output_available": true,
+      "saved_pct": 76.5027,
+      "saved_tokens": 245,
+      "status": "completed",
+      "stdout_bytes": 1000
+    },
+    {
+      "compact_status_bytes": 302,
+      "full_result_bytes": 11032,
+      "output_available": true,
+      "saved_pct": 97.2625,
+      "saved_tokens": 2682,
+      "status": "completed",
+      "stdout_bytes": 10000
+    },
+    {
+      "compact_status_bytes": 303,
+      "full_result_bytes": 108533,
+      "output_available": true,
+      "saved_pct": 99.7208,
+      "saved_tokens": 27058,
+      "status": "completed",
+      "stdout_bytes": 100000
+    }
+  ],
+  "hdc_primitives": [
+    {
+      "dimension": 128,
+      "elements_per_second_median": 47267355.98,
+      "max_us": 2.958,
+      "mean_us": 2.7016,
+      "median_us": 2.708,
+      "min_us": 2.666,
+      "operation": "bind",
+      "p95_us": 2.75
+    },
+    {
+      "dimension": 128,
+      "elements_per_second_median": 45165843.33,
+      "max_us": 3.708,
+      "mean_us": 2.8683,
+      "median_us": 2.834,
+      "min_us": 2.792,
+      "operation": "unbind",
+      "p95_us": 2.916
+    },
+    {
+      "dimension": 128,
+      "elements_per_second_median": 47994000.75,
+      "max_us": 2.75,
+      "mean_us": 2.685,
+      "median_us": 2.667,
+      "min_us": 2.625,
+      "operation": "bundle",
+      "p95_us": 2.709
+    },
+    {
+      "dimension": 128,
+      "elements_per_second_median": 61420345.49,
+      "max_us": 2.125,
+      "mean_us": 2.0777,
+      "median_us": 2.084,
+      "min_us": 2.041,
+      "operation": "resonance",
+      "p95_us": 2.125
+    },
+    {
+      "dimension": 1024,
+      "elements_per_second_median": 40025015.63,
+      "max_us": 30.333,
+      "mean_us": 25.7574,
+      "median_us": 25.584,
+      "min_us": 25.417,
+      "operation": "bind",
+      "p95_us": 25.792
+    },
+    {
+      "dimension": 1024,
+      "elements_per_second_median": 39960975.61,
+      "max_us": 35.167,
+      "mean_us": 26.1558,
+      "median_us": 25.625,
+      "min_us": 25.5,
+      "operation": "unbind",
+      "p95_us": 29.583
+    },
+    {
+      "dimension": 1024,
+      "elements_per_second_median": 39830409.58,
+      "max_us": 28.375,
+      "mean_us": 25.9866,
+      "median_us": 25.709,
+      "min_us": 25.458,
+      "operation": "bundle",
+      "p95_us": 28.333
+    },
+    {
+      "dimension": 1024,
+      "elements_per_second_median": 55980756.61,
+      "max_us": 28.583,
+      "mean_us": 18.4808,
+      "median_us": 18.292,
+      "min_us": 18.125,
+      "operation": "resonance",
+      "p95_us": 18.458
+    },
+    {
+      "dimension": 4096,
+      "elements_per_second_median": 40272151.65,
+      "max_us": 129.916,
+      "mean_us": 102.9883,
+      "median_us": 101.708,
+      "min_us": 101.416,
+      "operation": "bind",
+      "p95_us": 111.084
+    },
+    {
+      "dimension": 4096,
+      "elements_per_second_median": 40050649.99,
+      "max_us": 124.958,
+      "mean_us": 105.1949,
+      "median_us": 102.2705,
+      "min_us": 101.292,
+      "operation": "unbind",
+      "p95_us": 112.292
+    },
+    {
+      "dimension": 4096,
+      "elements_per_second_median": 40140531.06,
+      "max_us": 116.166,
+      "mean_us": 104.845,
+      "median_us": 102.0415,
+      "min_us": 101.208,
+      "operation": "bundle",
+      "p95_us": 114.834
+    },
+    {
+      "dimension": 4096,
+      "elements_per_second_median": 55759753.87,
+      "max_us": 86.625,
+      "mean_us": 74.0083,
+      "median_us": 73.458,
+      "min_us": 72.583,
+      "operation": "resonance",
+      "p95_us": 78.291
+    }
+  ],
+  "hkvc_scaling": [
+    {
+      "confidence": 0.011678,
+      "dimension": 1024,
+      "entries": 100,
+      "max_us": 15.125,
+      "mean_us": 11.4713,
+      "median_us": 11.541,
+      "min_us": 10.416,
+      "p95_us": 11.958,
+      "store_per_second": 26414.85,
+      "store_seconds": 0.003786,
+      "value_ok": true
+    },
+    {
+      "confidence": 0.000219,
+      "dimension": 1024,
+      "entries": 1000,
+      "max_us": 12.333,
+      "mean_us": 11.5797,
+      "median_us": 12.041,
+      "min_us": 10.875,
+      "p95_us": 12.209,
+      "store_per_second": 25247.66,
+      "store_seconds": 0.039608,
+      "value_ok": true
+    },
+    {
+      "confidence": 7.8e-05,
+      "dimension": 1024,
+      "entries": 5000,
+      "max_us": 13.375,
+      "mean_us": 11.9026,
+      "median_us": 12.042,
+      "min_us": 10.916,
+      "p95_us": 12.167,
+      "store_per_second": 25219.26,
+      "store_seconds": 0.198261,
+      "value_ok": true
+    }
+  ],
+  "install_smoke": {
+    "bind_unbind_resonance": 1.0,
+    "distribution_version": "1.3.2",
+    "holo_swarm_method_len": 128,
+    "holo_swarm_property_len": 128,
+    "module_version": "1.3.2",
+    "version_ok": true
+  },
+  "memory_model": [
+    {
+      "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
+      "catalyst_rain_header_mb": 0.001764,
+      "catalyst_world_vector_mb": 0.016384,
+      "rain_header_reduction_x": 371519.27,
+      "standard_kv_cache_mb": 655.36,
+      "tokens": 1000,
+      "world_vector_reduction_x": 40000.0
+    },
+    {
+      "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
+      "catalyst_rain_header_mb": 0.001764,
+      "catalyst_world_vector_mb": 0.016384,
+      "rain_header_reduction_x": 1857596.37,
+      "standard_kv_cache_mb": 3276.8,
+      "tokens": 5000,
+      "world_vector_reduction_x": 200000.0
+    },
+    {
+      "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
+      "catalyst_rain_header_mb": 0.001764,
+      "catalyst_world_vector_mb": 0.016384,
+      "rain_header_reduction_x": 3715192.74,
+      "standard_kv_cache_mb": 6553.6,
+      "tokens": 10000,
+      "world_vector_reduction_x": 400000.0
+    },
+    {
+      "assumption": "40 layers, hidden size 4096, FP16 K+V tensors",
+      "catalyst_rain_header_mb": 0.001764,
+      "catalyst_world_vector_mb": 0.016384,
+      "rain_header_reduction_x": 18575963.72,
+      "standard_kv_cache_mb": 32768.0,
+      "tokens": 50000,
+      "world_vector_reduction_x": 2000000.0
+    }
+  ],
+  "metadata": {
+    "catalyst_brain_distribution": "1.3.2",
+    "catalyst_brain_version": "1.3.2",
+    "finished_at": "2026-05-10T23:50:01.419792+00:00",
+    "machine": "arm64",
+    "mode": "quick",
+    "platform": "macOS-26.4-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.13.13",
+    "sdk_version_expected": "1.3.2",
+    "started_at": "2026-05-10T23:50:00.973460+00:00",
+    "suite_version": "0.1.0"
+  },
+  "token_discovery": [
+    {
+      "compact_discovery_bytes": 1629,
+      "compact_discovery_saved_pct": 95.5702,
+      "compact_page_bytes": 2893,
+      "compact_page_saved_pct": 92.133,
+      "compact_page_saved_tokens": 8470,
+      "expanded_one_schema_bytes": 3709,
+      "expanded_one_schema_saved_pct": 89.9141,
+      "full_manifest_bytes": 36774,
+      "tool_count": 10
+    },
+    {
+      "compact_discovery_bytes": 1625,
+      "compact_discovery_saved_pct": 99.12,
+      "compact_page_bytes": 5807,
+      "compact_page_saved_pct": 96.8554,
+      "compact_page_saved_tokens": 44715,
+      "expanded_one_schema_bytes": 3728,
+      "expanded_one_schema_saved_pct": 97.9812,
+      "full_manifest_bytes": 184665,
+      "tool_count": 50
+    },
+    {
+      "compact_discovery_bytes": 1625,
+      "compact_discovery_saved_pct": 99.5603,
+      "compact_page_bytes": 5807,
+      "compact_page_saved_pct": 98.4285,
+      "compact_page_saved_tokens": 90931,
+      "expanded_one_schema_bytes": 3728,
+      "expanded_one_schema_saved_pct": 98.9912,
+      "full_manifest_bytes": 369531,
+      "tool_count": 100
+    }
+  ]
+}

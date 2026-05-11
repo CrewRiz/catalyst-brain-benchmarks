@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  benchmark:
+    name: Public PyPI benchmark smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install benchmark package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Run tests
+        run: pytest -q
+      - name: Run quick benchmark
+        run: catalyst-brain-bench --mode quick --out results/local
+      - name: Upload generated results
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalyst-brain-benchmark-results
+          path: results/local

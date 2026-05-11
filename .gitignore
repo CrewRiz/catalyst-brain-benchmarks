@@ -1,0 +1,15 @@
+/.venv/
+/build/
+/dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store
+
+# Generated local benchmark outputs. Curated published results live under
+# results/latest.* and charts/*.svg.
+results/local/
+results/tmp/

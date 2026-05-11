@@ -1,0 +1,4 @@
+tool_count,full_manifest_bytes,compact_page_bytes,compact_page_saved_pct,compact_discovery_bytes,compact_discovery_saved_pct,expanded_one_schema_bytes,expanded_one_schema_saved_pct,compact_page_saved_tokens
+10,36774,2893,92.133,1629,95.5702,3709,89.9141,8470
+50,184665,5807,96.8554,1625,99.12,3728,97.9812,44715
+100,369531,5807,98.4285,1625,99.5603,3728,98.9912,90931

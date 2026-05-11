@@ -1,0 +1,4 @@
+stdout_bytes,full_result_bytes,compact_status_bytes,saved_pct,saved_tokens,status,output_available
+1000,1281,301,76.5027,245,completed,True
+10000,11032,302,97.2625,2682,completed,True
+100000,108533,303,99.7208,27058,completed,True
