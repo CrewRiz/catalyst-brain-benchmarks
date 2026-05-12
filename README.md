@@ -3,9 +3,10 @@
 Open benchmark suite for verifying Catalyst Brain SDK behavior from the public
 PyPI wheels.
 
-The benchmark code is MIT licensed. The `catalyst-brain` SDK is a separate
-closed-source, freemium commercial SDK distributed through PyPI. These tests use
-only the public SDK API and do not require source access.
+The benchmark code is MIT licensed. The `catalyst-brain` SDK is distributed
+through PyPI with a generous free tier. These tests use only the public SDK API,
+do not require source access, and do not require signup, registration, or an API
+key for normal local benchmark runs.
 
 ## What This Verifies
 
@@ -102,7 +103,13 @@ The GitHub workflow installs `catalyst-brain==1.3.3` from PyPI, runs the quick
 benchmark, and uploads generated results as artifacts. It does not need SDK
 source code or private credentials.
 
-## License
+## Free Tier And Production Use
 
 Benchmark code is MIT licensed. The Catalyst Brain SDK is governed by its own
-commercial license and terms.
+terms.
+
+Install `catalyst-brain` from PyPI and run these benchmarks without signup,
+registration, or an API key. Most users should not hit free-tier limits during
+early benchmark reproduction. If your use case moves toward production,
+enterprise evaluation, hosted benchmarking, customer pilots, or needs higher
+quotas/support, contact `hello@strategic-innovations.ai`.
